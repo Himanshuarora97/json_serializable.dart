@@ -85,13 +85,24 @@ abstract class DecodeHelper implements HelperCore {
       for (final field in data.fieldsToSet) {
         buffer.writeln();
         final safeName = safeNameAccess(accessibleFields[field]!);
-        buffer
-          ..write('''
+        final isNullableField = accessibleFields[field]!.type.isNullableType;
+        if (isNullableField) {
+          buffer
+            ..write('''
+    \$checkedConvertForNull(json, $safeName, (v) => ''')
+            ..write('val.$field = ')
+            ..write(_deserializeForField(accessibleFields[field]!,
+                checkedProperty: true))
+            ..write(');');
+        } else {
+          buffer
+            ..write('''
     \$checkedConvert(json, $safeName, (v) => ''')
-          ..write('val.$field = ')
-          ..write(_deserializeForField(accessibleFields[field]!,
-              checkedProperty: true))
-          ..write(');');
+            ..write('val.$field = ')
+            ..write(_deserializeForField(accessibleFields[field]!,
+                checkedProperty: true))
+            ..write(');');
+        }
       }
 
       buffer.write('''\n    return val;

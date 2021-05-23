@@ -56,6 +56,18 @@ T $checkedConvert<T>(Map map, String key, T Function(dynamic) castFunc) {
   }
 }
 
+/// Helper function used in generated code when return null instead of throwing an error
+/// `JsonSerializableGenerator.checked` is `true`.
+/// 
+/// Should not be used directly.
+T? $checkedConvertNull<T>(Map map, String key, T Function(dynamic) castFunc) {
+  try {
+    return castFunc(map[key]);
+  } catch (error) {
+    return null;
+  }
+}
+
 /// Exception thrown if there is a runtime exception in `fromJson`
 /// code generated when `JsonSerializableGenerator.checked` is `true`
 class CheckedFromJsonException implements Exception {
