@@ -60,7 +60,7 @@ T $checkedConvert<T>(Map map, String key, T Function(dynamic) castFunc) {
 /// `JsonSerializableGenerator.checked` is `true`.
 /// 
 /// Should not be used directly.
-T? $checkedConvertNull<T>(Map map, String key, T Function(dynamic) castFunc) {
+T? $checkedConvertForNull<T>(Map map, String key, T Function(dynamic) castFunc) {
   try {
     return castFunc(map[key]);
   } catch (error) {
