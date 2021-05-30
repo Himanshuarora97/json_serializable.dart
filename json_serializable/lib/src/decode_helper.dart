@@ -193,7 +193,11 @@ abstract class DecodeHelper implements HelperCore {
             )
             .toString();
         if (!checkedProperty) {
-          value = '\$checkedConvert(json, $jsonKeyName, (v) => $value)';
+          if (field.type.isNullableType) {
+            value = '\$checkedConvertForNull(json, $jsonKeyName, (v) => $value)';
+          } else {
+            value = '\$checkedConvert(json, $jsonKeyName, (v) => $value)';
+          }
         }
       } else {
         assert(!checkedProperty,
