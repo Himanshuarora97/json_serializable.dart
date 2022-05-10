@@ -7,8 +7,16 @@ part of 'json_converter_example.dart';
 // **************************************************************************
 
 DateTimeExample _$DateTimeExampleFromJson(Map<String, dynamic> json) =>
-    DateTimeExample(
-      const _DateTimeEpochConverter().fromJson(json['when'] as int),
+    $checkedCreate(
+      'DateTimeExample',
+      json,
+      ($checkedConvert) {
+        final val = DateTimeExample(
+          $checkedConvert('when',
+              (v) => const _DateTimeEpochConverter().fromJson(v as int)),
+        );
+        return val;
+      },
     );
 
 Map<String, dynamic> _$DateTimeExampleToJson(DateTimeExample instance) =>
@@ -18,13 +26,29 @@ Map<String, dynamic> _$DateTimeExampleToJson(DateTimeExample instance) =>
 
 GenericCollection<T> _$GenericCollectionFromJson<T>(
         Map<String, dynamic> json) =>
-    GenericCollection<T>(
-      page: json['page'] as int?,
-      totalResults: json['total_results'] as int?,
-      totalPages: json['total_pages'] as int?,
-      results: (json['results'] as List<dynamic>?)
-          ?.map(_Converter<T>().fromJson)
-          .toList(),
+    $checkedCreate(
+      'GenericCollection',
+      json,
+      ($checkedConvert) {
+        final val = GenericCollection<T>(
+          page: $checkedConvertForNull(json, 'page', (v) => v as int?),
+          totalResults:
+              $checkedConvertForNull(json, 'total_results', (v) => v as int?),
+          totalPages:
+              $checkedConvertForNull(json, 'total_pages', (v) => v as int?),
+          results: $checkedConvertForNull(
+              json,
+              'results',
+              (v) => (v as List<dynamic>?)
+                  ?.map(_Converter<T>().fromJson)
+                  .toList()),
+        );
+        return val;
+      },
+      fieldKeyMap: const {
+        'totalResults': 'total_results',
+        'totalPages': 'total_pages'
+      },
     );
 
 Map<String, dynamic> _$GenericCollectionToJson<T>(
@@ -36,9 +60,17 @@ Map<String, dynamic> _$GenericCollectionToJson<T>(
       'results': instance.results?.map(_Converter<T>().toJson).toList(),
     };
 
-CustomResult _$CustomResultFromJson(Map<String, dynamic> json) => CustomResult(
-      json['name'] as String,
-      json['size'] as int,
+CustomResult _$CustomResultFromJson(Map<String, dynamic> json) =>
+    $checkedCreate(
+      'CustomResult',
+      json,
+      ($checkedConvert) {
+        final val = CustomResult(
+          $checkedConvert('name', (v) => v as String),
+          $checkedConvert('size', (v) => v as int),
+        );
+        return val;
+      },
     );
 
 Map<String, dynamic> _$CustomResultToJson(CustomResult instance) =>

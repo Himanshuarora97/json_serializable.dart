@@ -11,9 +11,16 @@ Tuple<T, S> _$TupleFromJson<T, S>(
   T Function(Object? json) fromJsonT,
   S Function(Object? json) fromJsonS,
 ) =>
-    Tuple<T, S>(
-      fromJsonT(json['value1']),
-      fromJsonS(json['value2']),
+    $checkedCreate(
+      'Tuple',
+      json,
+      ($checkedConvert) {
+        final val = Tuple<T, S>(
+          $checkedConvert('value1', (v) => fromJsonT(v)),
+          $checkedConvert('value2', (v) => fromJsonS(v)),
+        );
+        return val;
+      },
     );
 
 Map<String, dynamic> _$TupleToJson<T, S>(
@@ -27,13 +34,26 @@ Map<String, dynamic> _$TupleToJson<T, S>(
     };
 
 ConcreteClass _$ConcreteClassFromJson(Map<String, dynamic> json) =>
-    ConcreteClass(
-      Tuple<int, DateTime>.fromJson(json['tuple1'] as Map<String, dynamic>,
-          (value) => value as int, (value) => DateTime.parse(value as String)),
-      Tuple<Duration, BigInt>.fromJson(
-          json['tuple2'] as Map<String, dynamic>,
-          (value) => Duration(microseconds: value as int),
-          (value) => BigInt.parse(value as String)),
+    $checkedCreate(
+      'ConcreteClass',
+      json,
+      ($checkedConvert) {
+        final val = ConcreteClass(
+          $checkedConvert(
+              'tuple1',
+              (v) => Tuple<int, DateTime>.fromJson(
+                  v as Map<String, dynamic>,
+                  (value) => value as int,
+                  (value) => DateTime.parse(value as String))),
+          $checkedConvert(
+              'tuple2',
+              (v) => Tuple<Duration, BigInt>.fromJson(
+                  v as Map<String, dynamic>,
+                  (value) => Duration(microseconds: value as int),
+                  (value) => BigInt.parse(value as String))),
+        );
+        return val;
+      },
     );
 
 Map<String, dynamic> _$ConcreteClassToJson(ConcreteClass instance) =>

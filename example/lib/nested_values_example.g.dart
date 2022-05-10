@@ -7,9 +7,19 @@ part of 'nested_values_example.dart';
 // **************************************************************************
 
 NestedValueExample _$NestedValueExampleFromJson(Map<String, dynamic> json) =>
-    NestedValueExample(
-      const _NestedListConverter()
-          .fromJson(json['root_items'] as Map<String, dynamic>),
+    $checkedCreate(
+      'NestedValueExample',
+      json,
+      ($checkedConvert) {
+        final val = NestedValueExample(
+          $checkedConvert(
+              'root_items',
+              (v) => const _NestedListConverter()
+                  .fromJson(v as Map<String, dynamic>)),
+        );
+        return val;
+      },
+      fieldKeyMap: const {'nestedValues': 'root_items'},
     );
 
 Map<String, dynamic> _$NestedValueExampleToJson(NestedValueExample instance) =>

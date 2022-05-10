@@ -90,13 +90,25 @@ abstract class DecodeHelper implements HelperCore {
         sectionBuffer.writeln();
         final fieldValue = accessibleFields[fieldName]!;
         final safeName = safeNameAccess(fieldValue);
-        sectionBuffer
-          ..write('''
+        final isNullableField =
+            accessibleFields[fieldName]!.type.isNullableType;
+        if (isNullableField) {
+          sectionBuffer
+            ..write('''
+    \$checkedConvertForNull(json, $safeName, (v) => ''')
+            ..write('val.$fieldName = ')
+            ..write(
+              _deserializeForField(fieldValue, checkedProperty: true),
+            );
+        } else {
+          sectionBuffer
+            ..write('''
     \$checkedConvert($safeName, (v) => ''')
-          ..write('val.$fieldName = ')
-          ..write(
-            _deserializeForField(fieldValue, checkedProperty: true),
-          );
+            ..write('val.$fieldName = ')
+            ..write(
+              _deserializeForField(fieldValue, checkedProperty: true),
+            );
+        }
 
         final readValueFunc = jsonKeyFor(fieldValue).readValueFunctionName;
         if (readValueFunc != null) {
@@ -219,7 +231,13 @@ abstract class DecodeHelper implements HelperCore {
         if (!checkedProperty) {
           final readValueBit =
               readValueFunc == null ? '' : ',readValue: $readValueFunc,';
-          value = '\$checkedConvert($jsonKeyName, (v) => $value$readValueBit)';
+          if (field.type.isNullableType) {
+            value =
+                '\$checkedConvertForNull(json, $jsonKeyName, (v) => $value$readValueBit)';
+          } else {
+            value =
+                '\$checkedConvert($jsonKeyName, (v) => $value$readValueBit)';
+          }
         }
       } else {
         assert(
