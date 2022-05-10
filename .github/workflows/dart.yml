@@ -31,7 +31,7 @@ jobs:
         with:
           sdk: stable
       - id: checkout
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v3.0.2
       - name: mono_repo self validate
         run: pub global activate mono_repo 4.0.0
       - name: mono_repo self validate
@@ -54,7 +54,7 @@ jobs:
         with:
           sdk: "2.12.0"
       - id: checkout
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v3.0.2
       - id: _test_yaml_pub_upgrade
         name: "_test_yaml; pub upgrade --no-precompile"
         if: "always() && steps.checkout.conclusion == 'success'"
@@ -138,7 +138,7 @@ jobs:
         with:
           sdk: dev
       - id: checkout
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v3.0.2
       - id: _test_yaml_pub_upgrade
         name: "_test_yaml; pub upgrade --no-precompile"
         if: "always() && steps.checkout.conclusion == 'success'"
@@ -222,7 +222,7 @@ jobs:
         with:
           sdk: "2.12.0"
       - id: checkout
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v3.0.2
       - id: _test_yaml_pub_upgrade
         name: "_test_yaml; pub upgrade --no-precompile"
         if: "always() && steps.checkout.conclusion == 'success'"
@@ -281,7 +281,7 @@ jobs:
         with:
           sdk: dev
       - id: checkout
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v3.0.2
       - id: _test_yaml_pub_upgrade
         name: "_test_yaml; pub upgrade --no-precompile"
         if: "always() && steps.checkout.conclusion == 'success'"
@@ -340,7 +340,7 @@ jobs:
         with:
           sdk: "2.12.0"
       - id: checkout
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v3.0.2
       - id: json_serializable_pub_upgrade
         name: "json_serializable; pub upgrade --no-precompile"
         if: "always() && steps.checkout.conclusion == 'success'"
@@ -372,7 +372,7 @@ jobs:
         with:
           sdk: dev
       - id: checkout
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v3.0.2
       - id: json_serializable_pub_upgrade
         name: "json_serializable; pub upgrade --no-precompile"
         if: "always() && steps.checkout.conclusion == 'success'"
@@ -404,7 +404,7 @@ jobs:
         with:
           sdk: "2.12.0"
       - id: checkout
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v3.0.2
       - id: _test_yaml_pub_upgrade
         name: "_test_yaml; pub upgrade --no-precompile"
         if: "always() && steps.checkout.conclusion == 'success'"
@@ -467,7 +467,7 @@ jobs:
         with:
           sdk: dev
       - id: checkout
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v3.0.2
       - id: _test_yaml_pub_upgrade
         name: "_test_yaml; pub upgrade --no-precompile"
         if: "always() && steps.checkout.conclusion == 'success'"
